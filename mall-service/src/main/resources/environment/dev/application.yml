@@ -4,14 +4,8 @@ spring:
     - dev
 
 server:
-  context-path: /ic-service
+  context-path: /mall-service
   
 mybatis:
   mapper-locations:
-  - classpath*:mybatis/*.xml
-
-pagehelper: 
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
+  - classpath*:mapper/*.xml

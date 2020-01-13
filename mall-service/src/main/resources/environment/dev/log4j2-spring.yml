@@ -10,7 +10,7 @@ Configuration:
     RollingFile: # 输出到文件，超过20MB归档
         name: RollingFile  
         ignoreExceptions: false  
-        fileName: c:/logs/ic-service.log
+        fileName: logs/mall-service.log
         filePattern: "logs/$${date:yyyy-MM}/projectName -%d{yyyy-MM-dd}-%i.log.gz"  
         PatternLayout:  
           pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p (%F:%L) - %m%n"  
