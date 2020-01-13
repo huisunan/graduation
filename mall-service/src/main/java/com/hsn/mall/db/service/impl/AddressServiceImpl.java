@@ -1,10 +1,11 @@
 package com.hsn.mall.db.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.hsn.mall.core.model.AddressModel;
 import com.hsn.mall.db.mapper.AddressMapper;
 import com.hsn.mall.core.service.IAddressService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -14,7 +15,8 @@ import org.springframework.stereotype.Service;
  * @author huisunan
  * @since 2020-01-13
  */
-@Service
+@Component("AddressServiceImpl")
+@Service(interfaceClass = IAddressService.class)
 public class AddressServiceImpl extends ServiceImpl<AddressMapper, AddressModel> implements IAddressService {
 
 }
