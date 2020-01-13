@@ -2,58 +2,40 @@ logging:
   config: classpath:log4j2-spring.yml
 
 server:
-  port: 9074
-  
+  port: 9010
+
 # 数据库访问配置
 spring:
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://192.168.0.11:3306/ic?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;zeroDateTimeBehavior=convertToNull
-#    password: Szzd@mysql_123
-    url: jdbc:mysql://172.29.201.107:3306/ic?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;zeroDateTimeBehavior=convertToNull
-    password: founder123
-#    url: jdbc:mysql:///ic?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;zeroDateTimeBehavior=convertToNull
-#    password: root
-    username: root
-    # 下面为连接池的补充设置，应用到上面所有数据源中
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    # 配置获取连接等待超时的时间
-    maxWait: 60000
-    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-    timeBetweenEvictionRunsMillis: 60000
-    # 配置一个连接在池中最小生存的时间，单位是毫秒
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    # 打开PSCache，并且指定每个连接上PSCache的大小 
-    #poolPreparedStatements: true
-    #maxPoolPreparedStatementPerConnectionSize: 20
-    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-    filters: stat,wall,log4j2
-    logSlowSql: true
-    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-    # 合并多个DruidDataSource的监控数据
-    useGlobalDataSourceStat: true
+  redis:
+    database: 0
+    host: 127.0.0.1
+    password: root
+    port: 6379
+    timeout: 3000 #连接超时时间 单位ms
+    #redis线程池设置
+    pool:
+      max-idle: 500 # 连接池中的最大空闲连接，默认值也是8。
+      min-idle: 50  #连接池中的最小空闲连接，默认值也是0。
+      max-active: 2000 # 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
 
-  #dubbo配置
   dubbo:
-    server: true
     application:
-      name: ic-service
+      name: mall-admin
+    consumer:
+      check: false #关闭所有服务的启动时检查 (没有提供者时报错)
+      timeout: 10000
     registry:
       protocol: zookeeper
-#      address: 192.168.0.15:2181
-      address: 172.29.201.45:2181
-      check: false
-    protocol:  
-      name: dubbo
-      port: 20888
+      address: 127.0.0.1:2181
+
+
+shiro:
+  loginUrl: /toLogin
+  ## session管理方式，true使用shiro提供的session管理，false则使用servlet提供的session管理
+  userNativeSessionManager: true
+  sessionManager:
+    sessionIdUrlRewritingEnabled: false
+
 
 
 

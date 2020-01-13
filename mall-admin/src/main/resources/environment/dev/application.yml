@@ -3,15 +3,13 @@ spring:
     active:
     - dev
 
-server:
-  context-path: /ic-service
-  
-mybatis:
-  mapper-locations:
-  - classpath*:mybatis/*.xml
+  http:
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
+    jmx:
+      default-domain: mall-admin
 
-pagehelper: 
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
+  server:
+    context-path: /mall-admin
+
