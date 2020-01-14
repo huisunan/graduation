@@ -1,9 +1,14 @@
 package com.hsn.mall.admin.controller;
 
 
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.hsn.mall.core.service.IAdminService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -11,11 +16,13 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author huisunan
- * @since 2020-01-13
+ * @since 2020-01-14
  */
-@Controller
+@RestController
 @RequestMapping("/adminModel")
 public class AdminController {
+    @Reference
+    private IAdminService iAdminService;
 
 }
 

@@ -3,7 +3,7 @@ package com.hsn.mall.admin.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author huisunan
- * @since 2020-01-13
+ * @since 2020-01-14
  */
-@Controller
+@RestController
 @RequestMapping("/couponUserModel")
 public class CouponUserController {
 

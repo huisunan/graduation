@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +19,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author huisunan
- * @since 2020-01-13
+ * @since 2020-01-14
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -56,13 +58,20 @@ public class AdminModel extends Model<AdminModel> {
     private String avatar;
 
     /**
+     * 0:启用 1：禁用
+     */
+    private Boolean disabled;
+
+    /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime addTime;
 
     /**
      * 更新时间
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     /**

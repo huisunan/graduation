@@ -1,6 +1,7 @@
 package com.hsn.mall.admin.interceptors;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSONObject;
 import com.hsn.mall.core.model.LogModel;
 import com.hsn.mall.core.service.ILogService;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,6 @@ public class LogAspect {
         log.info("[{}]执行耗时:{}ms!",name,time);
         HttpServletRequest request = getHttpServletRequest();
         String remoteHost = getRemoteHost(request);
-
         LogModel logModel = new LogModel();
         logModel.setUserId(1);
         logModel.setUserName("huisunan");
@@ -50,7 +50,7 @@ public class LogAspect {
         logModel.setType(1);
         logModel.setAction(request.getRequestURI());
         logModel.setStatus(true);
-        logModel.setResult(proceed.toString());
+        logModel.setResult("");
         logModel.setUseTime((int) time);
 
         logService.save(logModel);

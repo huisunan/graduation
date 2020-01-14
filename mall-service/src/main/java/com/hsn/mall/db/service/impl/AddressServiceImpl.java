@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
  * </p>
  *
  * @author huisunan
- * @since 2020-01-13
+ * @since 2020-01-14
  */
-@Component("AddressServiceImpl")
+@Component
 @Service(interfaceClass = IAddressService.class)
 public class AddressServiceImpl extends ServiceImpl<AddressMapper, AddressModel> implements IAddressService {
 

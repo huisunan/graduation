@@ -11,6 +11,7 @@
         <result column="last_login_time" property="lastLoginTime" />
         <result column="avatar" property="avatar" />
         <result column="add_time" property="addTime" />
+        <result column="disabled" property="disabled" />
         <result column="update_time" property="updateTime" />
         <result column="deleted" property="deleted" />
         <result column="role_ids" property="roleIds" />

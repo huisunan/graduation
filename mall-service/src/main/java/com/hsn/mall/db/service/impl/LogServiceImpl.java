@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
  * </p>
  *
  * @author huisunan
- * @since 2020-01-13
+ * @since 2020-01-14
  */
-@Service(interfaceClass = ILogService.class)
 @Component
+@Service(interfaceClass = ILogService.class)
 public class LogServiceImpl extends ServiceImpl<LogMapper, LogModel> implements ILogService {
 
 }
