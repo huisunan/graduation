@@ -4,6 +4,8 @@ import com.hsn.mall.admin.exception.BaseException;
 import com.hsn.mall.admin.bean.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.AuthorizationException;
+import org.springframework.core.annotation.Order;
+import org.springframework.core.annotation.OrderUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,13 +42,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(RuntimeException.class)
     public ResponseResult handleRuntimeException(RuntimeException e){
         log.error(e.getMessage(),e);
-        String message = "";
-        try {
-            StackTraceElement ste = (new Throwable()).getStackTrace()[1];
-            message = ste.getClassName()+":"+ste.getMethodName()+":" +ste.getLineNumber();
-        } catch (Exception var3) {
-        }
-        return new ResponseResult(1,message,null);
+        return new ResponseResult(1,e.getMessage(),null);
     }
 
     /**
@@ -57,22 +53,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseResult handleException(Exception e){
         log.error(e.getMessage(),e);
-        String message = "";
-        try {
-            StackTraceElement ste = (new Throwable()).getStackTrace()[1];
-            message = ste.getClassName()+":"+ste.getMethodName()+":" +ste.getLineNumber();
-        } catch (Exception var3) {
-        }
-        return new ResponseResult(1,message,null);
+        return new ResponseResult(1,e.getMessage(),null);
     }
 
-    @ExceptionHandler(AuthorizationException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseResult handleException(AuthorizationException e, Model model) {
-
-        // you could return a 404 here instead (this is how github handles 403, so the user does NOT know there is a
-        // resource at that location)
-        log.debug("AuthorizationException was thrown", e);
-        return new ResponseResult(HttpStatus.FORBIDDEN.value(),"拒绝访问!",null);
-    }
 }

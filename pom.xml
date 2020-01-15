@@ -26,30 +26,6 @@
         <springboot.version>2.2.2.RELEASE</springboot.version>
     </properties>
 
-    <profiles>
-        <profile>
-            <!-- 开发环境 -->
-            <id>dev</id>
-            <properties>
-                <environment>dev</environment><!-- 节点名字environment是自己随意取的 -->
-            </properties>
-        </profile>
-        <profile>
-            <!-- 测试环境 -->
-            <id>test</id>
-            <properties>
-                <environment>test</environment>
-            </properties>
-        </profile>
-        <profile>
-            <!-- 生产环境 -->
-            <id>prod</id>
-            <properties>
-                <environment>prod</environment>
-            </properties>
-        </profile>
-    </profiles>
-    <!--    版本锁定 -->
     <dependencyManagement>
         <dependencies>
             <!--mybatis plus-->

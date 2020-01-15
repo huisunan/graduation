@@ -1,6 +1,7 @@
 package com.hsn.mall.admin.bean;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hsn.mall.core.model.PermissionModel;
 import lombok.Data;
 
@@ -24,11 +25,6 @@ public class LoginUserBean  implements Serializable {
     private String username;
 
     /**
-     * 管理员密码
-     */
-    private String password;
-
-    /**
      * 最近一次登录IP地址
      */
     private String lastLoginIp;
@@ -36,6 +32,7 @@ public class LoginUserBean  implements Serializable {
     /**
      * 最近一次登录时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd mm:HH:ss")
     private LocalDateTime lastLoginTime;
 
     /**
@@ -51,17 +48,14 @@ public class LoginUserBean  implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd mm:HH:ss")
     private LocalDateTime addTime;
 
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd mm:HH:ss")
     private LocalDateTime updateTime;
-
-    /**
-     * 逻辑删除
-     */
-    private Boolean deleted;
 
     /**
      * 角色代码列表

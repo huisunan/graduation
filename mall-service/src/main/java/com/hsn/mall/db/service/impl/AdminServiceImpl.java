@@ -28,4 +28,5 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminModel> imple
         wrapper.eq("username",username);
         return this.getOne(wrapper);
     }
+
 }

@@ -1,5 +1,7 @@
 package com.hsn.mall.admin.relam;
 
+import com.alibaba.dubbo.config.ReferenceConfig;
+import com.alibaba.dubbo.spring.boot.DubboProperties;
 import com.hsn.mall.admin.bean.LoginUserBean;
 import com.hsn.mall.admin.exception.NoPermissionException;
 import com.hsn.mall.core.model.AdminModel;
@@ -13,6 +15,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,8 +28,19 @@ import java.util.*;
 @Component
 @Slf4j
 public class AuthRealm extends AuthorizingRealm {
-    @Reference
     private IAdminService iAdminService;
+
+    @Autowired
+    private DubboProperties dubboProperties;
+
+    public void setService(){
+        ReferenceConfig<IAdminService> adminServiceReferenceConfig = new ReferenceConfig<>();
+        adminServiceReferenceConfig.setApplication(dubboProperties.getApplication());
+        adminServiceReferenceConfig.setRegistry(dubboProperties.getRegistry());
+        adminServiceReferenceConfig.setCheck(false);
+        adminServiceReferenceConfig.setInterface(IAdminService.class);
+        iAdminService = adminServiceReferenceConfig.get();
+    }
 
     /**
      *授权
@@ -94,7 +108,7 @@ public class AuthRealm extends AuthorizingRealm {
         // 3). realmName: 当前 realm 对象的 name. 调用父类的 getName() 方法即可
         String realmName = getName();
         // 4). ByteSource credentialsSalt 盐值，相同的密码，加密之后密文是一样的，加入盐值使每个人的密码都不一样
-        ByteSource salt = ByteSource.Util.bytes(userModel.getId().toString());
+        ByteSource salt = ByteSource.Util.bytes(StringUtils.reverse(userModel.getUsername()));
 
         // SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, credentials, realmName);
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, credentials, salt, realmName);

@@ -1,0 +1,22 @@
+logging:
+  config: classpath:log4j2-spring-prod.yml
+
+server:
+  port: 9073
+  #dubbo配置
+  dubbo:
+    server: true
+    application:
+      name: ic-service
+    registry:
+      protocol: zookeeper
+      address: 172.18.1.55:2181,172.18.1.56:2181,172.18.1.57:2181
+      check: false
+    protocol:
+      name: dubbo
+      port: 20887
+
+
+
+
+

@@ -1,17 +1,17 @@
 logging:
-  config: classpath:log4j2-spring.yml
+  config: classpath:log4j2-spring-prod.yml
 
 server:
-  port: 9073
+  port: 9000
 
 # 数据库访问配置
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://128.1.31.210:3306/ic?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://139.199.106.104:3306/litemall?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=false
     username: root
-    password: founder123
+    password: root
     # 下面为连接池的补充设置，应用到上面所有数据源中
     initialSize: 5
     minIdle: 5
@@ -41,7 +41,7 @@ spring:
   dubbo:
     server: true
     application:
-      name: ic-service
+      name: mall-service
     registry:
       protocol: zookeeper
       address: 172.18.1.55:2181,172.18.1.56:2181,172.18.1.57:2181
