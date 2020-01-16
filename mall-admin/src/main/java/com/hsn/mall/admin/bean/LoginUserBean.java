@@ -66,4 +66,9 @@ public class LoginUserBean  implements Serializable {
      * 权限列表
      */
     private List<PermissionModel> permissionList;
+
+    /**
+     * token
+     */
+    private String token;
 }

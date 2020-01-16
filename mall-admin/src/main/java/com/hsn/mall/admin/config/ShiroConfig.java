@@ -3,11 +3,14 @@ package com.hsn.mall.admin.config;
 import com.hsn.mall.admin.relam.AuthRealm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.ShiroHttpSession;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
@@ -76,7 +79,19 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultWebSecurityManager securityManager(SessionManager sessionManager, RedisCacheManager redisCacheManager) {
+    public RememberMeManager rememberMeManager(){
+        CookieRememberMeManager manager = new CookieRememberMeManager();
+        SimpleCookie simpleCookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
+        simpleCookie.setMaxAge(60*60*24);
+        simpleCookie.setHttpOnly(false);
+        manager.setCookie(simpleCookie);
+        return manager;
+    }
+
+    @Bean
+    public DefaultWebSecurityManager securityManager(
+            SessionManager sessionManager, RedisCacheManager redisCacheManager,
+            RememberMeManager rememberMeManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //注入service
         authRealm.setService();
@@ -92,7 +107,7 @@ public class ShiroConfig {
         // 自定义session管理 使用redis
         securityManager.setSessionManager(sessionManager);
         //注入记住我管理器;
-        //securityManager.setRememberMeManager(rememberMeManager());
+        securityManager.setRememberMeManager(rememberMeManager);
         return securityManager;
     }
 
@@ -138,6 +153,7 @@ public class ShiroConfig {
     public DefaultWebSessionManager sessionManager(RedisSessionDAO sessionDAO, SimpleCookie simpleCookie) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionDAO(sessionDAO);
+        sessionManager.setGlobalSessionTimeout(1000*60*60*24);
         sessionManager.setSessionIdCookieEnabled(true);
         sessionManager.setSessionIdCookie(simpleCookie);
         return sessionManager;
@@ -161,6 +177,7 @@ public class ShiroConfig {
     public SimpleCookie simpleCookie() {
         SimpleCookie simpleCookie = new SimpleCookie();
         simpleCookie.setName(name);
+        simpleCookie.setHttpOnly(false);
         simpleCookie.setValue(value);
         return simpleCookie;
     }
