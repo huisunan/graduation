@@ -9,6 +9,9 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -38,40 +41,22 @@ public class PermissionModel extends Model<PermissionModel> {
     private String name;
 
     /**
-     * 组件的请求路径
-     */
-    private String path;
-
-    /**
      * 接口请求路径
      */
     private String url;
 
     /**
-     * 图标样式
-     */
-    private String icon;
-
-    /**
-     * 父权限ID
-     */
-    private Integer parentId;
-
-    /**
-     * 权限
-     */
-    private String permission;
-
-    /**
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime addTime;
 
     /**
      * 更新时间
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     /**
@@ -79,7 +64,6 @@ public class PermissionModel extends Model<PermissionModel> {
      */
     @TableLogic
     private Boolean deleted;
-
 
     @Override
     protected Serializable pkVal() {

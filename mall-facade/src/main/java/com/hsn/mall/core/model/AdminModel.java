@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -85,6 +87,8 @@ public class AdminModel extends Model<AdminModel> {
      */
     private String roleIds;
 
+    @TableField(exist = false)
+    private List<PermissionModel> permissionList;
 
     @Override
     protected Serializable pkVal() {

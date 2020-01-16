@@ -2,12 +2,19 @@ package com.hsn.mall.core.request;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 
 /**
  * @author huisunan
+ * @date 2020/1/16 12:57
  */
 @Data
-public class AdminCreateDTO {
+public class AdminUpdateDTO {
+    /**
+     * 用户ID
+     */
+    @NotNull(message = "id不能为空")
+    private Integer id;
     /**
      * 管理员名称
      */

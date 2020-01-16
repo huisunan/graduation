@@ -21,7 +21,7 @@ Configuration:
           max: 1000
   Loggers:
     Root:
-      level: debug
+      level: info
       AppenderRef:
         - ref: Console
         - ref: RollingFile

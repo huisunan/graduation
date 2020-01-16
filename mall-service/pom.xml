@@ -70,7 +70,11 @@
         </dependency>
         <!-- dubbo 所需要的jar end -->
 
-
+        <!-- 工具包-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

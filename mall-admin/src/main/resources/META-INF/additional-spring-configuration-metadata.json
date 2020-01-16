@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "mall.shiro.cache-key",
+      "type": "java.lang.String",
+      "description": "shiro缓存在redis的key"
+    },
+    {
+      "name": "mall.shiro.session-key",
+      "type": "java.lang.String",
+      "description": "shiro的session-key"
+    },
+    {
+      "name": "mall.shiro.cookie-name",
+      "type": "java.lang.String",
+      "description": "shiro cookie名称"
+    },
+    {
+      "name": "mall.shiro.cookie-value",
+      "type": "java.lang.String",
+      "description": "shiro cookie默认值"
+    }
+  ] }

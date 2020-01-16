@@ -7,6 +7,8 @@ import com.hsn.mall.core.service.IPermissionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * <p>
  * 权限表 服务实现类

@@ -15,6 +15,7 @@ import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -56,10 +57,11 @@ public class ShiroConfig {
         map.put("/", "anon");
         map.put("/login", "anon");
         map.put("/logout", "anon");
+        map.put("/toLogin","anon");
         //除了以上的请求外，其它请求都需要登录
         map.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
-//        shiroFilterFactoryBean.setLoginUrl("/toLogin");
+        shiroFilterFactoryBean.setLoginUrl("/toLogin");
         return shiroFilterFactoryBean;
     }
 
@@ -95,10 +97,14 @@ public class ShiroConfig {
     }
 
 
-    private static final String CACHE_KEY = "shiro:cache:";
-    private static final String SESSION_KEY = "shiro:session:";
-    private static final String NAME = "custom.name";
-    private static final String VALUE = "/";
+    @Value("${mall.shiro.cache-key}")
+    private String cacheKey;
+    @Value("${mall.shiro.session-key}")
+    private String sessionKey;
+    @Value("${mall.shiro.cookie-name}")
+    private String name;
+    @Value("${mall.shiro.cookie-value}")
+    private String value;
 
     @Bean
     public RedisManager redisManager(RedisProperties redisProperties) {
@@ -115,7 +121,7 @@ public class ShiroConfig {
         redisCacheManager.setExpire(86400);
         //设置一个登录对象的唯一键,redis需要用此字段区分不同的登录对象session
         redisCacheManager.setPrincipalIdFieldName("id");
-        redisCacheManager.setKeyPrefix(CACHE_KEY);
+        redisCacheManager.setKeyPrefix(cacheKey);
         return redisCacheManager;
     }
 
@@ -123,7 +129,7 @@ public class ShiroConfig {
     public RedisSessionDAO redisSessionDAO(RedisManager redisManager) {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
         redisSessionDAO.setExpire(86400);
-        redisSessionDAO.setKeyPrefix(SESSION_KEY);
+        redisSessionDAO.setKeyPrefix(sessionKey);
         redisSessionDAO.setRedisManager(redisManager);
         return redisSessionDAO;
     }
@@ -154,8 +160,8 @@ public class ShiroConfig {
     @Bean
     public SimpleCookie simpleCookie() {
         SimpleCookie simpleCookie = new SimpleCookie();
-        simpleCookie.setName(NAME);
-        simpleCookie.setValue(VALUE);
+        simpleCookie.setName(name);
+        simpleCookie.setValue(value);
         return simpleCookie;
     }
 

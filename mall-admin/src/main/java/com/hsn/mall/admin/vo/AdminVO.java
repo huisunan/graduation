@@ -1,22 +1,19 @@
-package com.hsn.mall.admin.bean;
+package com.hsn.mall.admin.vo;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hsn.mall.core.model.PermissionModel;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author huisunan
- * @date 2020/1/14 11:52
+ * @date 2020/1/16 11:51
  */
 @Data
-public class LoginUserBean  implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class AdminVO {
     private Integer id;
 
     /**
@@ -58,12 +55,7 @@ public class LoginUserBean  implements Serializable {
     private LocalDateTime updateTime;
 
     /**
-     * 角色代码列表
+     * 角色列表
      */
     private String roleIds;
-
-    /**
-     * 权限列表
-     */
-    private List<PermissionModel> permissionList;
 }

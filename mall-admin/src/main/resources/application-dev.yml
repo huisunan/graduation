@@ -7,7 +7,7 @@ server:
 # 数据库访问配置
 spring:
   redis:
-    database: 0
+    database: 1
     host: 127.0.0.1
     password: Founder123
     port: 6379
@@ -36,8 +36,12 @@ shiro:
   sessionManager:
     sessionIdUrlRewritingEnabled: false
 
-
-
+mall:
+  shiro:
+    cache-key: "shiro:cache:"
+    session-key: "shiro:session:"
+    cookie-name: "custom.name"
+    cookie-value: "/"
 
 
 

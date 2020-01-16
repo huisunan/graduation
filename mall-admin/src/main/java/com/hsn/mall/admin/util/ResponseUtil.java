@@ -13,7 +13,7 @@ public class ResponseUtil {
         return success(message,null);
     }
     public static ResponseResult success(String message,Object data){
-        return new ResponseResult(1,message,data);
+        return new ResponseResult(0,message,data);
     }
     public static ResponseResult newInstance(Integer code,String message,Object data){
         return new ResponseResult(code,message,data);

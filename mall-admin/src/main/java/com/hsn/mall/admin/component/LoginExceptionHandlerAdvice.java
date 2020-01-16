@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 登录异常处理器
+ * @author huisunan
  */
 @RestControllerAdvice
 @Slf4j
@@ -37,7 +38,7 @@ public class LoginExceptionHandlerAdvice {
      */
     @ExceptionHandler(IncorrectCredentialsException.class)
     public ResponseResult handleIncorrectCredentialsException(IncorrectCredentialsException e){
-        log.debug(e.getMessage());
+        log.info(e.getMessage());
         return new ResponseResult(1,"密码错误",null);
     }
 
@@ -48,7 +49,7 @@ public class LoginExceptionHandlerAdvice {
      */
     @ExceptionHandler(LockedAccountException.class)
     public ResponseResult handleLockedAccountException (LockedAccountException e){
-        log.debug(e.getMessage());
+        log.info(e.getMessage());
         return new ResponseResult(1,"账号被锁定",null);
     }
 
@@ -59,7 +60,7 @@ public class LoginExceptionHandlerAdvice {
      */
     @ExceptionHandler(NoPermissionException.class)
     public ResponseResult handleNoPermissionException(NoPermissionException  e){
-        log.debug(e.getMessage());
+        log.info(e.getMessage());
         return new ResponseResult(1,"权限不足",null);
     }
 

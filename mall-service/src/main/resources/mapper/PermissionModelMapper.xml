@@ -6,14 +6,17 @@
     <resultMap id="BaseResultMap" type="com.hsn.mall.core.model.PermissionModel">
         <id column="id" property="id" />
         <result column="name" property="name" />
-        <result column="path" property="path" />
         <result column="url" property="url" />
-        <result column="icon" property="icon" />
-        <result column="parent_id" property="parentId" />
-        <result column="permission" property="permission" />
         <result column="add_time" property="addTime" />
         <result column="update_time" property="updateTime" />
         <result column="deleted" property="deleted" />
     </resultMap>
-
+    <select id="selectByRoleIds" parameterType="list" resultMap="BaseResultMap">
+        select distinct b.* from litemall_role_permission a
+        inner join litemall_permission b on  b.id = a.permission_id
+        where a.role_id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
