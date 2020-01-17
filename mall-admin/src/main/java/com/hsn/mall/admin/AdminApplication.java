@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author huisunan
  * @date 2020/1/13 12:08
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.hsn.mall.admin","com.hsn.mall.core"})
 @EnableDubboConfiguration
 public class AdminApplication {
     public static void main(String[] args) {

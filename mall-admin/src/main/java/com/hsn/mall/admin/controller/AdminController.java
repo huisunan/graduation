@@ -10,11 +10,10 @@ import com.hsn.mall.admin.util.PageUtil;
 import com.hsn.mall.admin.util.ResponseUtil;
 import com.hsn.mall.admin.vo.AdminVO;
 import com.hsn.mall.core.model.AdminModel;
-import com.hsn.mall.core.model.PermissionModel;
 import com.hsn.mall.core.model.RoleModel;
-import com.hsn.mall.core.request.AdminCreateDTO;
-import com.hsn.mall.core.request.AdminListSearchDTO;
-import com.hsn.mall.core.request.AdminUpdateDTO;
+import com.hsn.mall.core.request.create.AdminCreateDTO;
+import com.hsn.mall.core.request.search.AdminSearchDTO;
+import com.hsn.mall.core.request.update.AdminUpdateDTO;
 import com.hsn.mall.core.response.PageResponse;
 import com.hsn.mall.core.service.IAdminService;
 import com.hsn.mall.core.service.IRoleService;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -80,7 +78,7 @@ public class AdminController {
      */
     @GetMapping("/list")
     @Permission("查询")
-    public PageResponse<AdminVO> list(@RequestBody AdminListSearchDTO dto){
+    public PageResponse<AdminVO> list(@RequestBody AdminSearchDTO dto){
         QueryWrapper<AdminModel> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("username",dto.getKeyWord());
         Page<AdminModel> page = new Page<>(dto.getCurrent(),dto.getSize());

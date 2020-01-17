@@ -1,4 +1,4 @@
-package com.hsn.mall.core.request;
+package com.hsn.mall.core.request.update;
 
 import lombok.Data;
 

@@ -78,20 +78,19 @@ public class ShiroConfig {
         return hashedCredentialsMatcher;
     }
 
-    @Bean
-    public RememberMeManager rememberMeManager(){
-        CookieRememberMeManager manager = new CookieRememberMeManager();
-        SimpleCookie simpleCookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
-        simpleCookie.setMaxAge(60*60*24);
-        simpleCookie.setHttpOnly(false);
-        manager.setCookie(simpleCookie);
-        return manager;
-    }
+//    @Bean
+//    public RememberMeManager rememberMeManager(){
+//        CookieRememberMeManager manager = new CookieRememberMeManager();
+//        SimpleCookie simpleCookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
+//        simpleCookie.setMaxAge(60*60*24);
+//        simpleCookie.setHttpOnly(false);
+//        manager.setCookie(simpleCookie);
+//        return manager;
+//    }
 
     @Bean
     public DefaultWebSecurityManager securityManager(
-            SessionManager sessionManager, RedisCacheManager redisCacheManager,
-            RememberMeManager rememberMeManager) {
+            SessionManager sessionManager, RedisCacheManager redisCacheManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //注入service
         authRealm.setService();
@@ -107,7 +106,7 @@ public class ShiroConfig {
         // 自定义session管理 使用redis
         securityManager.setSessionManager(sessionManager);
         //注入记住我管理器;
-        securityManager.setRememberMeManager(rememberMeManager);
+//        securityManager.setRememberMeManager(rememberMeManager);
         return securityManager;
     }
 
@@ -178,6 +177,7 @@ public class ShiroConfig {
         SimpleCookie simpleCookie = new SimpleCookie();
         simpleCookie.setName(name);
         simpleCookie.setHttpOnly(false);
+        simpleCookie.setMaxAge(60*60*24);
         simpleCookie.setValue(value);
         return simpleCookie;
     }

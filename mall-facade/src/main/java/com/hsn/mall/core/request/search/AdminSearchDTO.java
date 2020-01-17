@@ -1,4 +1,4 @@
-package com.hsn.mall.core.request;
+package com.hsn.mall.core.request.search;
 
 import com.hsn.mall.core.bean.BaseSearchBean;
 import lombok.Data;
@@ -11,9 +11,6 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AdminListSearchDTO extends BaseSearchBean {
-    /**
-     * 关键字,管理员名称
-     */
-    private String keyWord;
+public class AdminSearchDTO extends BaseSearchBean {
+
 }

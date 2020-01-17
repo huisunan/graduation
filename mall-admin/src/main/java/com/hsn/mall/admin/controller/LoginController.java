@@ -67,9 +67,7 @@ public class LoginController {
             }
         }
         //重新获取认证信息并返回
-        LoginUserBean loginUserBean = (LoginUserBean) subject.getPrincipal();
-        //设置过期时间
-        subject.getSession().setTimeout(60*60*24);
+        LoginUserBean loginUserBean = SubjectUtil.getUserBean();
         //修改登录信息
         AdminModel adminModel = new AdminModel();
         adminModel.setId(loginUserBean.getId());
@@ -100,8 +98,7 @@ public class LoginController {
 
     @GetMapping("userInfo")
     @Permission("获取用户信息")
-    public LoginUserBean getUserInfo(
-            @CookieValue("${mall.shiro.cache-name}") Cookie cookie) {
+    public LoginUserBean getUserInfo() {
 
         return SubjectUtil.getUserBean();
     }

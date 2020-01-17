@@ -2,6 +2,7 @@ package com.hsn.mall.admin.util;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hsn.mall.admin.vo.AdminVO;
+import com.hsn.mall.core.bean.BaseSearchBean;
 import com.hsn.mall.core.model.AdminModel;
 import com.hsn.mall.core.response.PageResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -40,5 +41,8 @@ public class PageUtil {
         }
         response.setRecords(list);
         return response;
+    }
+    public static <T> Page<T> create(BaseSearchBean baseSearchBean){
+        return new Page<>(baseSearchBean.getCurrent(),baseSearchBean.getSize());
     }
 }

@@ -1,6 +1,7 @@
 package com.hsn.mall.admin.controller;
 
 
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/categoryModel")
 public class CategoryController {
-
 }
 

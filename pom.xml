@@ -17,6 +17,7 @@
         <module>mall-service</module>
         <module>mall-admin</module>
         <module>mall-facade</module>
+        <module>mall-core</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
@@ -83,29 +84,23 @@
                 <artifactId>fastjson</artifactId>
                 <version>1.2.62</version>
             </dependency>
+            <!--七牛云存储-->
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>[7.2.0, 7.2.99]</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
+    <dependencies>
+        <!-- 热部署模块 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
     <build>
-        <finalName>graduation</finalName>
-
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <!-- 一个*指排除文件，不排除文件夹，两个*号指排除文件和文件夹 -->
-                    <exclude>environment/dev/**</exclude>
-                    <exclude>environment/test/**</exclude>
-                    <exclude>environment/uat/**</exclude>
-                    <exclude>environment/prod/**</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/resources/environment/${environment}</directory>
-                <targetPath>${project.build.directory}/classes</targetPath>
-            </resource>
-        </resources>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

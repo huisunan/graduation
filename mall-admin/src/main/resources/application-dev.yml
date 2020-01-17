@@ -42,6 +42,7 @@ mall:
     session-key: "shiro:session:"
     cookie-name: "custom.name"
     cookie-value: "/"
+  storage:
 
 
 

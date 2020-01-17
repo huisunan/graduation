@@ -26,4 +26,8 @@ public class BaseSearchBean {
      * 排序字段信息
      */
     private List<OrderItem> orders = new ArrayList<>();
+    /**
+     * 关键字,管理员名称
+     */
+    private String keyWord;
 }
