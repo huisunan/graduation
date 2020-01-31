@@ -36,11 +36,13 @@ public class BrandModel extends Model<BrandModel> {
     /**
      * 品牌商名称
      */
+    @TableField("`name`")
     private String name;
 
     /**
      * 品牌商简介
      */
+    @TableField("`desc`")
     private String desc;
 
     /**

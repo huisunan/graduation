@@ -1,15 +1,15 @@
-package com.hsn.mall.core.request.search;
+package com.hsn.mall.core.request;
 
 import com.hsn.mall.core.bean.BaseSearchBean;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 文件查找对象
  * @author huisunan
- * @date 2020/1/17 15:58
+ * @date 2020/1/20 21:19
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class StorageSearchDTO extends BaseSearchBean {
+public class UserSearchBean extends BaseSearchBean {
+    private String phone;
 }

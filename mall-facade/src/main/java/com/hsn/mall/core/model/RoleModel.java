@@ -35,16 +35,19 @@ public class RoleModel extends Model<RoleModel> {
     /**
      * 角色名称
      */
+    @TableField("`name`")
     private String name;
 
     /**
      * 角色描述
      */
+    @TableField("`desc`")
     private String desc;
 
     /**
      * 是否启用
      */
+    @TableField("`enabled`")
     private Boolean enabled;
 
     /**

@@ -1,12 +1,16 @@
 package com.hsn.mall.admin.controller;
 
 
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hsn.mall.admin.bean.ResponseResult;
+import com.hsn.mall.core.bean.BaseSearchBean;
 import com.hsn.mall.core.model.AddressModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.hsn.mall.core.response.PageResponse;
+import com.hsn.mall.core.service.IAddressService;
+import com.hsn.mall.core.service.IAdminService;
+import com.hsn.mall.core.util.PageUtil;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,13 +24,14 @@ import java.util.Map;
  * @since 2020-01-14
  */
 @RestController
-@RequestMapping("/addressModel")
+@RequestMapping("/address")
 public class AddressController {
-    @GetMapping("/test")
-    public Map<String,String> test(){
-        Map<String,String> map = new HashMap<>();
-        map.put("ddd","你好啊");
-        return map;
+    @Reference
+    private IAddressService addressService;
+    @PostMapping("/list")
+    public PageResponse<AddressModel> list(BaseSearchBean baseSearchBean){
+        Page<AddressModel> res = addressService.page(baseSearchBean);
+        return PageUtil.convert(res);
     }
 }
 

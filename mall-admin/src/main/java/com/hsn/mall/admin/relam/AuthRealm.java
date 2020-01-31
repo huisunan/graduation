@@ -5,6 +5,7 @@ import com.alibaba.dubbo.spring.boot.DubboProperties;
 import com.hsn.mall.admin.bean.LoginUserBean;
 import com.hsn.mall.admin.exception.NoPermissionException;
 import com.hsn.mall.core.model.AdminModel;
+import com.hsn.mall.core.model.RoleModel;
 import com.hsn.mall.core.service.IAdminService;
 import jdk.nashorn.internal.ir.annotations.Reference;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -96,8 +98,8 @@ public class AuthRealm extends AuthorizingRealm {
         BeanUtils.copyProperties(userModel, loginUser);
 
         //用户拥有的角色
-        String[] roles = StringUtils.split(userModel.getRoleIds());
-        if (roles.length == 0) {
+        List<RoleModel> roleList = userModel.getRoleList();
+        if (roleList == null || roleList.isEmpty()) {
             throw new NoPermissionException("没有权限登录");
         }
 

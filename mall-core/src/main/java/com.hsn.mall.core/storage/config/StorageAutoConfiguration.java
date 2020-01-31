@@ -59,6 +59,7 @@ public class StorageAutoConfiguration {
         qiniuStorage.setSecretKey(qiniu.getSecretKey());
         qiniuStorage.setBucketName(qiniu.getBucketName());
         qiniuStorage.setEndpoint(qiniu.getEndpoint());
+        qiniuStorage.setLink(qiniu.getLink());
         return qiniuStorage;
     }
 }

@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -45,6 +47,7 @@ public class CategoryModel extends Model<CategoryModel> {
     /**
      * 类目广告语介绍
      */
+    @TableField("`desc`")
     private String desc;
 
     /**
@@ -63,6 +66,9 @@ public class CategoryModel extends Model<CategoryModel> {
     private String picUrl;
 
     private String level;
+
+    @TableField(exist = false)
+    private List<CategoryModel> children;
 
     /**
      * 排序

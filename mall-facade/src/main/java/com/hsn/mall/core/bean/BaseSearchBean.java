@@ -3,6 +3,7 @@ package com.hsn.mall.core.bean;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,16 +12,16 @@ import java.util.List;
  * @date 2020/1/14 15:27
  */
 @Data
-public class BaseSearchBean {
+public class BaseSearchBean implements Serializable {
     /**
      * 每页显示条数，默认 10
      */
-    private long size = 10;
+    private long limit = 10;
 
     /**
      * 当前页
      */
-    private long current = 1;
+    private long page = 1;
 
     /**
      * 排序字段信息
@@ -29,5 +30,5 @@ public class BaseSearchBean {
     /**
      * 关键字,管理员名称
      */
-    private String keyWord;
+    private String keyword;
 }

@@ -10,5 +10,7 @@
         <result column="type" property="type" />
         <result column="code" property="code" />
     </resultMap>
-
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from litemall_region
+    </select>
 </mapper>

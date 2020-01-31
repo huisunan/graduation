@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author huisunan
@@ -57,5 +59,5 @@ public class AdminVO {
     /**
      * 角色列表
      */
-    private String roleIds;
+    private List<RoleAllVO> roles = new ArrayList<>();
 }

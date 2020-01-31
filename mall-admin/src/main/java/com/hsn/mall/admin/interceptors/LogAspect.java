@@ -8,10 +8,7 @@ import com.hsn.mall.core.model.LogModel;
 import com.hsn.mall.core.service.ILogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -24,8 +21,15 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class LogAspect {
 
-    @Reference
-    ILogService logService;
+    private ThreadLocal<LogModel> modelLocal = new ThreadLocal<LogModel>(){
+        @Override
+        protected LogModel initialValue() {
+            return new LogModel();
+        }
+    };
+
+    @Reference(async = true)
+    private ILogService logService;
 
     /**
      * 访问日志配置织入点(controller中并且以SysAccessLog注解为标志)
@@ -45,7 +49,7 @@ public class LogAspect {
         log.info("[{}]执行耗时:{}ms!",name,time);
         HttpServletRequest request = getHttpServletRequest();
         String remoteHost = RequestUtil.getRemoteHost(request);
-        LogModel logModel = new LogModel();
+        LogModel logModel = modelLocal.get();
         logModel.setUserId(SubjectUtil.getUserId());
         logModel.setUserName(SubjectUtil.getUserName());
         logModel.setIp(remoteHost);
@@ -54,9 +58,27 @@ public class LogAspect {
         logModel.setStatus(true);
         logModel.setResult("");
         logModel.setUseTime((int) time);
-
-        logService.save(logModel);
         return proceed;
+    }
+
+    @AfterReturning("accessLogPointCut()")
+    public void doAfterReturning(){
+        this.save();
+    }
+
+    private void save(){
+        LogModel logModel = modelLocal.get();
+        new Thread(()->{
+            logService.save(logModel);
+        }).start();
+        modelLocal.remove();
+    }
+
+    @AfterThrowing("accessLogPointCut()")
+    public void doThrowing(){
+        LogModel logModel = modelLocal.get();
+        logModel.setStatus(false);
+        this.save();
     }
 
     private HttpServletRequest getHttpServletRequest() {

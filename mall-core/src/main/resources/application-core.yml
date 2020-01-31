@@ -1,14 +1,15 @@
 mall:
   storage:
-    active: local
+    active: qiniu
     # 本地对象存储配置信息
     local:
-      storagePath: storage
+      storagePath: F:\upload\mall-storage
       # 这个地方应该是wx模块的WxStorageController的fetch方法对应的地址
-      address: http://127.0.0.1:7788/mall-storage
+      address: http://127.0.0.1:7788/mall-storage/
     # 七牛云对象存储配置信息
     qiniu:
-      endpoint: http://pd5cb6ulu.bkt.clouddn.com
-      accessKey: 111111
-      secretKey: xxxxxx
+      endpoint: http://s3-cn-south-1.qiniucs.com
+      accessKey: gqMVtZBhLklPQrJkAVH3om0_C_5H_DukwFdltPaT
+      secretKey: vRCarkku37SwG4JjrRYJhZEMxH8D0jXIc20irWhq
       bucketName: mall-storage
+      link: http://q4a4a39bm.bkt.clouddn.com/

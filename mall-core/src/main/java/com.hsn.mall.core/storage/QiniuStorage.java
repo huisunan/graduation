@@ -26,6 +26,7 @@ public class QiniuStorage implements Storage {
     private String endpoint;
     private String accessKey;
     private String secretKey;
+    private String link;
     private String bucketName;
     private Auth auth;
     private UploadManager uploadManager;
@@ -92,6 +93,6 @@ public class QiniuStorage implements Storage {
 
     @Override
     public String generateUrl(String keyName) {
-        return endpoint + "/" + keyName;
+        return link + keyName;
     }
 }

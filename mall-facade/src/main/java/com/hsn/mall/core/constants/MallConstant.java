@@ -6,4 +6,5 @@ package com.hsn.mall.core.constants;
  * @date 2020/1/16 14:19
  */
 public interface MallConstant {
+    String REGION = "Region";
 }

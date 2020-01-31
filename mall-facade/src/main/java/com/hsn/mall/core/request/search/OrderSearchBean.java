@@ -4,12 +4,16 @@ import com.hsn.mall.core.bean.BaseSearchBean;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
- * 文件查找对象
  * @author huisunan
- * @date 2020/1/17 15:58
+ * @date 2020/1/29 15:52
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class StorageSearchDTO extends BaseSearchBean {
+public class OrderSearchBean extends BaseSearchBean {
+    private Integer userId;
+    private String orderSn;
+    private List<Integer> orderStatusArray;
 }

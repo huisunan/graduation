@@ -3,11 +3,13 @@ package com.hsn.mall.admin.component;
 import com.hsn.mall.admin.exception.BaseException;
 import com.hsn.mall.admin.bean.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.annotation.OrderUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -56,4 +58,9 @@ public class ExceptionHandlerAdvice {
         return new ResponseResult(1,e.getMessage(),null);
     }
 
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseResult handleRequestException(HttpRequestMethodNotSupportedException e){
+        log.info("{}方法不支持，请使用{}方法!",e.getMethod(), StringUtils.join(e.getSupportedHttpMethods()));
+        return new ResponseResult(1,"请使用["+StringUtils.join(e.getSupportedHttpMethods())+"]方法访问!",null);
+    }
 }

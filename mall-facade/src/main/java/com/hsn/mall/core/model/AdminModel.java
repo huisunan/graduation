@@ -26,7 +26,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("litemall_admin")
+@TableName(value = "litemall_admin",resultMap = "BaseResultMap")
 public class AdminModel extends Model<AdminModel> {
 
     private static final long serialVersionUID=1L;
@@ -60,7 +60,7 @@ public class AdminModel extends Model<AdminModel> {
     private String avatar;
 
     /**
-     * 0:启用 1：禁用
+     * 0:禁用 1：启用
      */
     private Boolean disabled;
 
@@ -82,10 +82,7 @@ public class AdminModel extends Model<AdminModel> {
     @TableLogic
     private Boolean deleted;
 
-    /**
-     * 角色列表
-     */
-    private String roleIds;
+    private List<RoleModel> roleList;
 
     @TableField(exist = false)
     private List<PermissionModel> permissionList;

@@ -14,7 +14,23 @@
         <result column="disabled" property="disabled" />
         <result column="update_time" property="updateTime" />
         <result column="deleted" property="deleted" />
-        <result column="role_ids" property="roleIds" />
+        <collection property="roleList" column="id" select="selectRole"/>
     </resultMap>
-
+    <select id="selectRole" resultType="com.hsn.mall.core.model.RoleModel">
+        select r.* from litemall_role r
+        inner join litemall_admin_role a on a.admin_id = #{id}
+        where a.role_id = r.id
+    </select>
+    <delete id="deleteAllRole" parameterType="int">
+        delete from litemall_admin_role
+        where admin_id = #{value}
+    </delete>
+    <insert id="insertRole">
+        insert  into litemall_admin_role  (admin_id,role_id) values
+        <foreach  collection="list" separator="," item="item">
+            (
+                #{id},#{item}
+            )
+        </foreach>
+    </insert>
 </mapper>

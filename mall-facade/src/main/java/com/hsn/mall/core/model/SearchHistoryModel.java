@@ -45,6 +45,7 @@ public class SearchHistoryModel extends Model<SearchHistoryModel> {
     /**
      * 搜索来源，如pc、wx、app
      */
+    @TableField("`from`")
     private String from;
 
     /**

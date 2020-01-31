@@ -1,10 +1,14 @@
 package com.hsn.mall.core.storage;
 
 import lombok.Data;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.core.io.Resource;
+import org.springframework.util.DigestUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -25,7 +29,7 @@ public class StorageProvider {
      * @param contentType   文件类型
      * @param fileName      文件索引名
      */
-    public MallStorage store(InputStream inputStream, long contentLength, String contentType, String fileName) {
+    public MallStorage store(InputStream inputStream, long contentLength, String contentType, String fileName){
         String key = generateKey(fileName);
         storage.store(inputStream, contentLength, contentType, key);
 
@@ -40,12 +44,12 @@ public class StorageProvider {
         return storageInfo;
     }
 
-    private String generateKey(String originalFilename) {
-        int index = originalFilename.lastIndexOf('.');
-        String suffix = originalFilename.substring(index);
-
+    private String generateKey(String fileName) {
+        int index = fileName.lastIndexOf('.');
+        String suffix = fileName.substring(index);
         return UUID.randomUUID().toString().replace("-","") + suffix;
     }
+
 
     public Stream<Path> loadAll() {
         return storage.loadAll();

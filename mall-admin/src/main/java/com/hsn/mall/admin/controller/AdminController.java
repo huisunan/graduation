@@ -2,13 +2,16 @@ package com.hsn.mall.admin.controller;
 
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hsn.mall.admin.annotation.Permission;
 import com.hsn.mall.admin.bean.ResponseResult;
-import com.hsn.mall.admin.util.PageUtil;
+import com.hsn.mall.core.util.PageUtil;
+import com.hsn.mall.admin.util.PasswordUtil;
 import com.hsn.mall.admin.util.ResponseUtil;
+import com.hsn.mall.admin.util.SubjectUtil;
 import com.hsn.mall.admin.vo.AdminVO;
+import com.hsn.mall.admin.vo.RoleAllVO;
 import com.hsn.mall.core.model.AdminModel;
 import com.hsn.mall.core.model.RoleModel;
 import com.hsn.mall.core.request.create.AdminCreateDTO;
@@ -17,15 +20,10 @@ import com.hsn.mall.core.request.update.AdminUpdateDTO;
 import com.hsn.mall.core.response.PageResponse;
 import com.hsn.mall.core.service.IAdminService;
 import com.hsn.mall.core.service.IRoleService;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -56,34 +54,32 @@ public class AdminController {
         if(byUserName != null){
             return ResponseUtil.fail("用户名已存在!");
         }
-        AdminModel model = new AdminModel();
-        model.setLastLoginTime(LocalDateTime.MIN);
-        BeanUtils.copyProperties(dto,model);
-        //加密方式
-        String hashAlgorithmName = "MD5";
-        //盐：为了即使相同的密码不同的盐加密后的结果也不同
-        ByteSource byteSalt = ByteSource.Util.bytes(StringUtils.reverse(dto.getUsername()));
-        //密码
-        Object source = dto.getPassword();
-        //加密次数
-        int hashIterations = 1024;
-        SimpleHash result = new SimpleHash(hashAlgorithmName, source, byteSalt, hashIterations);
-        model.setPassword(result.toString());
-        iAdminService.save(model);
+        dto.setPassword(PasswordUtil.addSalt(dto.getPassword(),dto.getUsername()));
+        iAdminService.save(dto);
         return ResponseUtil.success("添加成功!");
     }
 
     /**
      * 管理员用户查询
      */
-    @GetMapping("/list")
+    @PostMapping("/list")
     @Permission("查询")
     public PageResponse<AdminVO> list(@RequestBody AdminSearchDTO dto){
-        QueryWrapper<AdminModel> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("username",dto.getKeyWord());
-        Page<AdminModel> page = new Page<>(dto.getCurrent(),dto.getSize());
-        Page<AdminModel> search = iAdminService.page(page, queryWrapper);
-        return PageUtil.convert(search,AdminVO.class);
+        Page<AdminModel> search = iAdminService.page(dto);
+        PageResponse<AdminVO> vos = PageUtil.convert(search,AdminVO.class);
+        vos.setRecords(new ArrayList<>(vos.getRecords().size()));
+        for (AdminModel record : search.getRecords()) {
+            AdminVO adminVO = new AdminVO();
+            BeanUtils.copyProperties(record,adminVO);
+            if (CollectionUtils.isNotEmpty(record.getRoleList())){
+                record.getRoleList().forEach(i->adminVO.getRoles().add(
+                        new RoleAllVO().setValue(i.getId()).setLabel(i.getName())
+                ));
+            }
+            vos.getRecords().add(adminVO);
+        }
+
+        return vos;
     }
 
     /**
@@ -92,9 +88,7 @@ public class AdminController {
     @PostMapping("/update")
     @Permission("更新")
     public ResponseResult update(@RequestBody AdminUpdateDTO dto){
-        AdminModel model = new AdminModel();
-        BeanUtils.copyProperties(dto,model);
-        iAdminService.updateById(model);
+        iAdminService.updateById(dto);
         return ResponseUtil.success("更新成功！");
     }
 
@@ -104,23 +98,17 @@ public class AdminController {
     @GetMapping("/updateStatus")
     @Permission("禁启用账号")
     public ResponseResult updateStatus(
-            @RequestParam String ids,@RequestParam Boolean status){
-        if (StringUtils.isNoneBlank(ids)){
-            String[] split = ids.split(",");
-            List<AdminModel> modelList = new ArrayList<>(split.length);
-            for (String s : split) {
-                modelList.add(new AdminModel().setId(Integer.parseInt(s)).setDisabled(status));
-            }
-            iAdminService.updateBatchById(modelList);
-        }
+            @RequestParam Integer id,@RequestParam Boolean status){
+        AdminModel model = new AdminModel().setId(id).setDisabled(status);
+        iAdminService.updateById(model);
         return ResponseUtil.success("更新成功！");
     }
     /**
      * 通过id删除用户
      */
-    @GetMapping("/delete/{userId}")
+    @GetMapping("/delete")
     @Permission("删除")
-    public ResponseResult delete(@PathVariable("userId") Integer id){
+    public ResponseResult delete(@RequestParam Integer id){
        iAdminService.removeById(id);
        return ResponseUtil.success("删除成功!");
     }
@@ -128,15 +116,38 @@ public class AdminController {
     /**
      * 根据userId获取已有的角色
      */
-    @GetMapping("/selectRoleByUserId/{id}")
+    @GetMapping("/selectRoleByUserId")
     @Permission("根据id获取角色")
-    public List<RoleModel> selectRoleByUserId(@PathVariable Integer id){
+    public List<RoleModel> selectRoleByUserId(@RequestParam Integer id){
         AdminModel user = iAdminService.getById(id);
         List<RoleModel> list = null;
-        if (StringUtils.isNotEmpty(user.getRoleIds())){
-            list=roleService.listByIds(Arrays.asList(user.getRoleIds().split(",")));
+        if (user != null && CollectionUtils.isNotEmpty(user.getRoleList())){
+            list = user.getRoleList();
         }
         return list;
+    }
+
+    @PostMapping("/changePassword")
+    @Permission("用户更改密码")
+    public ResponseResult changePassword(String oldVal,String newVal){
+        ResponseResult result = ResponseUtil.success("修改密码成功");
+        AdminModel model = iAdminService.getById(SubjectUtil.getUserId());
+        String oldPassword = PasswordUtil.addSalt(oldVal, SubjectUtil.getUserName());
+        String newPassword = PasswordUtil.addSalt(newVal,SubjectUtil.getUserName());
+        if (!model.getPassword().equals(oldPassword)){
+            result.fail("旧密码错误!");
+        }
+        iAdminService.updateById(model.setPassword(newPassword));
+        return result;
+    }
+
+    @PostMapping("/updatePassword")
+    @Permission("管理员更改密码")
+    public ResponseResult updatePassword(Integer userId,String newVal){
+        AdminModel model = iAdminService.getById(userId);
+        String newPassword = PasswordUtil.addSalt(newVal, model.getUsername());
+        iAdminService.updateById(model.setPassword(newPassword));
+        return ResponseUtil.success("修改密码成功!");
     }
 }
 

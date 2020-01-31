@@ -1,26 +1,22 @@
 package com.hsn.mall.admin.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.hsn.mall.admin.annotation.Permission;
 import com.hsn.mall.admin.bean.ResponseResult;
-import com.hsn.mall.admin.util.PageUtil;
+import com.hsn.mall.core.util.PageUtil;
 import com.hsn.mall.admin.util.ResponseUtil;
 import com.hsn.mall.core.bean.BaseSearchBean;
 import com.hsn.mall.core.model.StorageModel;
 import com.hsn.mall.core.response.PageResponse;
 import com.hsn.mall.core.service.IStorageService;
-import com.hsn.mall.core.storage.Storage;
 import com.hsn.mall.core.storage.StorageProvider;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -40,37 +36,32 @@ public class StorageController {
     @Autowired
     private StorageProvider storageProvider;
 
-    @Autowired
+    @Reference
     private IStorageService storageService;
 
     @PostMapping("/list")
     @Permission("获取文件列表")
     public PageResponse<?> list(@RequestBody BaseSearchBean baseSearchBean){
-        QueryWrapper<StorageModel> query = new QueryWrapper<>();
-        String keyWord = baseSearchBean.getKeyWord();
-        if (StringUtils.isNotBlank(keyWord)) {
-            query.like("key",keyWord);
-            query.like("name",keyWord);
-        }
-        Page<StorageModel> page = PageUtil.create(baseSearchBean);
-        return PageUtil.convert(storageService.page(page,query));
+        return PageUtil.convert(storageService.page(baseSearchBean));
     }
 
-    @PostMapping("/create")
+    @PostMapping("/upload")
     @Permission("文件上传")
     public StorageProvider.MallStorage create(
             @RequestParam("file") MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
         StorageProvider.MallStorage store = storageProvider.store(file.getInputStream(), file.getSize(),
                 file.getContentType(), originalFilename);
+        StorageModel model = new StorageModel();
+        BeanUtils.copyProperties(store,model);
+        storageService.save(model);
         return store;
     }
 
     @Permission("详情")
-    @GetMapping("/read")
-    public StorageModel read(@NotNull Integer id) {
-        StorageModel model = storageService.getById(id);
-        return model;
+    @GetMapping("/detail")
+    public StorageModel read(@RequestParam Integer id) {
+        return storageService.getById(id);
     }
 
     @Permission("删除")

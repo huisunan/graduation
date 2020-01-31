@@ -13,7 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @EnableDubboConfiguration
-@MapperScan("com.hsn.mall.db.mapper")
 public class MallServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(MallServiceApplication.class,args);

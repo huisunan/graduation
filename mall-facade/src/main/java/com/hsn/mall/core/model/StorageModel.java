@@ -35,16 +35,19 @@ public class StorageModel extends Model<StorageModel> {
     /**
      * 文件的唯一索引
      */
+    @TableField("`key`")
     private String key;
 
     /**
      * 文件名
      */
+    @TableField("`name`")
     private String name;
 
     /**
      * 文件类型
      */
+    @TableField("`type`")
     private String type;
 
     /**
