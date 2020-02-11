@@ -14,5 +14,9 @@
         <result column="update_time" property="updateTime" />
         <result column="deleted" property="deleted" />
     </resultMap>
-
+    <update id="addStock" parameterType="map">
+        update litemall_goods_product
+        set number = number + #{num,jdbcType=INTEGER}, update_time = now()
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

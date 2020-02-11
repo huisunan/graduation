@@ -1,4 +1,4 @@
-package com.hsn.mall.admin.bean;
+package com.hsn.mall.core.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -20,5 +20,6 @@
 
     <select id="selectAll" resultMap="BaseResultMap">
         select * from litemall_category
+        where deleted = '0'
     </select>
 </mapper>

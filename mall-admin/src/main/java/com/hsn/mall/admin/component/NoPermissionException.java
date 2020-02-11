@@ -1,4 +1,4 @@
-package com.hsn.mall.admin.exception;
+package com.hsn.mall.admin.component;
 
 import org.apache.shiro.authc.AuthenticationException;
 

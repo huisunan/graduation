@@ -5,7 +5,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hsn.mall.admin.annotation.Permission;
-import com.hsn.mall.admin.bean.ResponseResult;
+import com.hsn.mall.core.bean.ResponseResult;
 import com.hsn.mall.core.util.PageUtil;
 import com.hsn.mall.admin.util.PasswordUtil;
 import com.hsn.mall.admin.util.ResponseUtil;
@@ -88,6 +88,7 @@ public class AdminController {
     @PostMapping("/update")
     @Permission("更新")
     public ResponseResult update(@RequestBody AdminUpdateDTO dto){
+        dto.setPassword(PasswordUtil.addSalt(dto.getPassword(),dto.getUsername()));
         iAdminService.updateById(dto);
         return ResponseUtil.success("更新成功！");
     }

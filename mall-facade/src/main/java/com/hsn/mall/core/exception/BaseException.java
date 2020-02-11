@@ -1,4 +1,4 @@
-package com.hsn.mall.admin.exception;
+package com.hsn.mall.core.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

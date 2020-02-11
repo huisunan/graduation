@@ -4,7 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.hsn.mall.admin.annotation.LogExclude;
 import com.hsn.mall.admin.annotation.Permission;
 import com.hsn.mall.admin.bean.LoginUserBean;
-import com.hsn.mall.admin.bean.ResponseResult;
+import com.hsn.mall.core.bean.ResponseResult;
 import com.hsn.mall.admin.util.ResponseUtil;
 import com.hsn.mall.admin.util.SubjectUtil;
 import com.hsn.mall.core.request.LoginDTO;
@@ -18,9 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
 /**

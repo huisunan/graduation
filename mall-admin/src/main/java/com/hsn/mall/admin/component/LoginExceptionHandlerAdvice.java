@@ -1,8 +1,6 @@
 package com.hsn.mall.admin.component;
 
-import com.hsn.mall.admin.bean.ResponseResult;
-import com.hsn.mall.admin.exception.BaseException;
-import com.hsn.mall.admin.exception.NoPermissionException;
+import com.hsn.mall.core.bean.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;

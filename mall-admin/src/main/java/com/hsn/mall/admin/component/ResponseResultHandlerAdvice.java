@@ -1,6 +1,6 @@
 package com.hsn.mall.admin.component;
 
-import com.hsn.mall.admin.bean.ResponseResult;
+import com.hsn.mall.core.bean.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

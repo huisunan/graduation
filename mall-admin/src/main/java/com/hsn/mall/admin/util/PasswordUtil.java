@@ -19,4 +19,8 @@ public class PasswordUtil {
         SimpleHash result = new SimpleHash(hashAlgorithmName, password, byteSalt, hashIterations);
         return result.toString();
     }
+
+    public static void main(String[] args) {
+        System.out.println(addSalt("123123", "huisunan"));
+    }
 }

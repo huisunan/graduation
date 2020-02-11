@@ -3,7 +3,7 @@ mall:
     active: qiniu
     # 本地对象存储配置信息
     local:
-      storagePath: F:\upload\mall-storage
+      storagePath: ./upload
       # 这个地方应该是wx模块的WxStorageController的fetch方法对应的地址
       address: http://127.0.0.1:7788/mall-storage/
     # 七牛云对象存储配置信息
@@ -13,3 +13,35 @@ mall:
       secretKey: vRCarkku37SwG4JjrRYJhZEMxH8D0jXIc20irWhq
       bucketName: mall-storage
       link: http://q4a4a39bm.bkt.clouddn.com/
+  # 快鸟物流查询配置
+  express:
+    enable: false
+    appId: "XXXXXXXXX"
+    appKey: "XXXXXXXXXXXXXXXXXXXXXXXXX"
+    vendors:
+      - code: "ZTO"
+        name: "中通快递"
+      - code: "YTO"
+        name: "圆通速递"
+      - code: "YD"
+        name: "韵达速递"
+      - code: "YZPY"
+        name: "邮政快递包裹"
+      - code: "EMS"
+        name: "EMS"
+      - code: "DBL"
+        name: "德邦快递"
+      - code: "FAST"
+        name: "快捷快递"
+      - code: "ZJS"
+        name: "宅急送"
+      - code: "TNT"
+        name: "TNT快递"
+      - code: "UPS"
+        name: "UPS"
+      - code: "DHL"
+        name: "DHL"
+      - code: "FEDEX"
+        name: "FEDEX联邦(国内件)"
+      - code: "FEDEX_GJ"
+        name: "FEDEX联邦(国际件)"

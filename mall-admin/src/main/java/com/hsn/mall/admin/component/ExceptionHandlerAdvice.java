@@ -1,21 +1,12 @@
 package com.hsn.mall.admin.component;
 
-import com.hsn.mall.admin.exception.BaseException;
-import com.hsn.mall.admin.bean.ResponseResult;
+import com.hsn.mall.core.bean.ResponseResult;
+import com.hsn.mall.core.exception.BaseException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.AuthorizationException;
-import org.springframework.core.annotation.Order;
-import org.springframework.core.annotation.OrderUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 异常处理器

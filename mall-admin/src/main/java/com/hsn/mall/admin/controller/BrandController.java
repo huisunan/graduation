@@ -3,8 +3,7 @@ package com.hsn.mall.admin.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hsn.mall.admin.bean.ResponseResult;
-import com.hsn.mall.admin.util.RedisUtil;
+import com.hsn.mall.core.bean.ResponseResult;
 import com.hsn.mall.admin.util.ResponseUtil;
 import com.hsn.mall.core.bean.BaseSearchBean;
 import com.hsn.mall.core.model.BrandModel;

@@ -3,7 +3,7 @@ package com.hsn.mall.admin.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.hsn.mall.admin.annotation.Permission;
-import com.hsn.mall.admin.bean.ResponseResult;
+import com.hsn.mall.core.bean.ResponseResult;
 import com.hsn.mall.core.util.PageUtil;
 import com.hsn.mall.admin.util.ResponseUtil;
 import com.hsn.mall.core.bean.BaseSearchBean;

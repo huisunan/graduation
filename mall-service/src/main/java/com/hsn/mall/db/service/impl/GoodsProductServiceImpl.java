@@ -19,4 +19,8 @@ import org.springframework.stereotype.Component;
 @Service(interfaceClass = IGoodsProductService.class)
 public class GoodsProductServiceImpl extends ServiceImpl<GoodsProductMapper, GoodsProductModel> implements IGoodsProductService {
 
+    @Override
+    public int addStock(Integer productId, Integer number) {
+        return this.baseMapper.addStock(productId,number);
+    }
 }

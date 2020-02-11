@@ -3,11 +3,10 @@ package com.hsn.mall.admin.relam;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.spring.boot.DubboProperties;
 import com.hsn.mall.admin.bean.LoginUserBean;
-import com.hsn.mall.admin.exception.NoPermissionException;
+import com.hsn.mall.admin.component.NoPermissionException;
 import com.hsn.mall.core.model.AdminModel;
 import com.hsn.mall.core.model.RoleModel;
 import com.hsn.mall.core.service.IAdminService;
-import jdk.nashorn.internal.ir.annotations.Reference;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -15,7 +14,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -110,7 +108,7 @@ public class AuthRealm extends AuthorizingRealm {
         // 3). realmName: 当前 realm 对象的 name. 调用父类的 getName() 方法即可
         String realmName = getName();
         // 4). ByteSource credentialsSalt 盐值，相同的密码，加密之后密文是一样的，加入盐值使每个人的密码都不一样
-        ByteSource salt = ByteSource.Util.bytes(StringUtils.reverse(userModel.getUsername()));
+        ByteSource salt = ByteSource.Util.bytes(username);
 
         // SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, credentials, realmName);
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, credentials, salt, realmName);

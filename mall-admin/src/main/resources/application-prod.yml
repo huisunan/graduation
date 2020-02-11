@@ -15,7 +15,9 @@ server:
     protocol:
       name: dubbo
       port: 20887
-
+    consumer:
+      check: false #关闭所有服务的启动时检查 (没有提供者时报错)
+      timeout: 10000
 
 
 
