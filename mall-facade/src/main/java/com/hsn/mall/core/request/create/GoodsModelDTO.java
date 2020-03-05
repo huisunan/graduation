@@ -1,36 +1,15 @@
-package com.hsn.mall.core.model;
+package com.hsn.mall.core.request.create;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
-/**
- * <p>
- * 商品基本信息表
- * </p>
- *
- * @author huisunan
- * @since 2020-01-14
- */
+import java.io.Serializable;
+import java.math.BigDecimal;
+
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-@TableName("litemall_goods")
-public class GoodsModel extends Model<GoodsModel> {
-
-    private static final long serialVersionUID=1L;
-
-    @TableId(value = "id", type = IdType.AUTO)
+public class GoodsModelDTO implements Serializable {
     private Integer id;
 
     /**
@@ -54,10 +33,7 @@ public class GoodsModel extends Model<GoodsModel> {
     /**
      * 商品宣传图片列表，采用JSON数组格式
      */
-    private String gallery;
-
-    @TableField(exist = false)
-    private String[] galleryArray;
+    private String[] gallery;
 
     /**
      * 商品关键字，采用逗号间隔
@@ -115,29 +91,4 @@ public class GoodsModel extends Model<GoodsModel> {
      * 商品详细介绍，是富文本格式
      */
     private String detail;
-
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime addTime;
-
-    /**
-     * 更新时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
-
-    /**
-     * 逻辑删除
-     */
-    @TableLogic
-    private Boolean deleted;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
 }

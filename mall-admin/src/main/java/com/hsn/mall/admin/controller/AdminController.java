@@ -8,7 +8,6 @@ import com.hsn.mall.admin.annotation.Permission;
 import com.hsn.mall.core.bean.ResponseResult;
 import com.hsn.mall.core.util.PageUtil;
 import com.hsn.mall.admin.util.PasswordUtil;
-import com.hsn.mall.admin.util.ResponseUtil;
 import com.hsn.mall.admin.util.SubjectUtil;
 import com.hsn.mall.admin.vo.AdminVO;
 import com.hsn.mall.admin.vo.RoleAllVO;
@@ -20,6 +19,7 @@ import com.hsn.mall.core.request.update.AdminUpdateDTO;
 import com.hsn.mall.core.response.PageResponse;
 import com.hsn.mall.core.service.IAdminService;
 import com.hsn.mall.core.service.IRoleService;
+import com.hsn.mall.core.util.ResponseUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 

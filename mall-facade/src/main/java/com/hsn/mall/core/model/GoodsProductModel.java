@@ -1,6 +1,8 @@
 package com.hsn.mall.core.model;
 
 import java.math.BigDecimal;
+
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -81,5 +83,6 @@ public class GoodsProductModel extends Model<GoodsProductModel> {
     protected Serializable pkVal() {
         return this.id;
     }
+
 
 }

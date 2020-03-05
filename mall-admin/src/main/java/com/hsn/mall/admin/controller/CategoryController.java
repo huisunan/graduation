@@ -3,9 +3,9 @@ package com.hsn.mall.admin.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.hsn.mall.core.bean.ResponseResult;
-import com.hsn.mall.admin.util.ResponseUtil;
 import com.hsn.mall.core.model.CategoryModel;
 import com.hsn.mall.core.service.ICategoryService;
+import com.hsn.mall.core.util.ResponseUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

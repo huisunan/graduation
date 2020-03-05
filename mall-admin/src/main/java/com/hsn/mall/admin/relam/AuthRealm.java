@@ -3,7 +3,7 @@ package com.hsn.mall.admin.relam;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.spring.boot.DubboProperties;
 import com.hsn.mall.admin.bean.LoginUserBean;
-import com.hsn.mall.admin.component.NoPermissionException;
+import com.hsn.mall.admin.exception.NoPermissionException;
 import com.hsn.mall.core.model.AdminModel;
 import com.hsn.mall.core.model.RoleModel;
 import com.hsn.mall.core.service.IAdminService;

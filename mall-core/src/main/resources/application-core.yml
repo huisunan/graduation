@@ -1,9 +1,9 @@
 mall:
   storage:
-    active: qiniu
+    active: local
     # 本地对象存储配置信息
     local:
-      storagePath: ./upload
+      storagePath: ./upload/mall-storage
       # 这个地方应该是wx模块的WxStorageController的fetch方法对应的地址
       address: http://127.0.0.1:7788/mall-storage/
     # 七牛云对象存储配置信息
@@ -12,7 +12,7 @@ mall:
       accessKey: gqMVtZBhLklPQrJkAVH3om0_C_5H_DukwFdltPaT
       secretKey: vRCarkku37SwG4JjrRYJhZEMxH8D0jXIc20irWhq
       bucketName: mall-storage
-      link: http://q4a4a39bm.bkt.clouddn.com/
+      link: http://mall-storage.s3-cn-south-1.qiniucs.com/
   # 快鸟物流查询配置
   express:
     enable: false
